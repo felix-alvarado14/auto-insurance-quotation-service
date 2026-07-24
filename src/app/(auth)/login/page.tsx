@@ -24,7 +24,7 @@ export default function LoginPage() {
                 Cotizaciones de Seguros
               </h1>
               <p className="text-sm text-muted-foreground">
-                Sistema de administración de pólizas
+                Sistema de cotización y gestión de seguros
               </p>
             </div>
           </div>

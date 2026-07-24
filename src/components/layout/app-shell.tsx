@@ -92,12 +92,11 @@ function SidebarContent() {
         </div>
       </div>
 
-      <div className="mt-auto space-y-3 border-t border-slate-200 pt-6 text-xs text-slate-600">
-        <div className="rounded-lg bg-slate-50 p-3 border border-slate-200">
-          <p className="font-semibold text-slate-900">Estado actual</p>
+      <div className="mt-auto border-t border-slate-200 pt-6 text-xs text-slate-600">
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+          <p className="font-semibold text-slate-900">Estado</p>
           <div className="mt-2 space-y-1 text-slate-600">
-            <p>Sistema: Operativo</p>
-            <p>Última actualización: hace 2 min</p>
+            <p>Acceso autenticado y flujo disponible.</p>
           </div>
         </div>
       </div>

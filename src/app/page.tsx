@@ -38,7 +38,7 @@ export default function Home() {
             </div>
 
             <div className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
-              Bienvenido. Comienza con una tarea real del flujo principal.
+              Selecciona una opción para continuar con el flujo principal.
             </div>
           </div>
         </Card>
