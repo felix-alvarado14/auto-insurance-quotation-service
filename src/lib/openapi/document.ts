@@ -100,6 +100,7 @@ export const openApiDocument = {
         summary: "List active products",
         description: "Returns the list of active products with pagination metadata.",
         operationId: "listProducts",
+        security,
         parameters: [
           {
             name: "page",
