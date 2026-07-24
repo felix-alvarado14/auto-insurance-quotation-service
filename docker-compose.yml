@@ -1,17 +1,56 @@
+name: auto-insurance-quotation-service
+
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DATABASE_URL: ${APP_DATABASE_URL:-mysql://app_user:app_password@mysql:3306/auto_insurance}
+        JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+        JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-1h}
+    container_name: auto-insurance-app
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      PORT: ${PORT:-3000}
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: ${APP_DATABASE_URL:-mysql://app_user:app_password@mysql:3306/auto_insurance}
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-1h}
+      PUBLIC_APP_URL: ${PUBLIC_APP_URL:-http://localhost:3000}
+    ports:
+      - "${PORT:-3000}:3000"
+    networks:
+      - app-network
+
   mysql:
-    image: mysql:8
+    image: mysql:8.0
     container_name: auto-insurance-mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: auto_insurance
-      MYSQL_USER: app_user
-      MYSQL_PASSWORD: app_password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-auto_insurance}
+      MYSQL_USER: ${MYSQL_USER:-app_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-app_password}
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p$${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - app-network
 
 volumes:
   mysql_data:
+
+networks:
+  app-network:
+    driver: bridge

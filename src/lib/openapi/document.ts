@@ -2,6 +2,8 @@ import { responses } from "./responses";
 import { schemas } from "./schemas";
 import { security, securitySchemes } from "./security";
 
+const apiBaseUrl = process.env.PUBLIC_APP_URL || "http://localhost:3000";
+
 export const openApiDocument = {
   openapi: "3.1.0",
   info: {
@@ -12,8 +14,8 @@ export const openApiDocument = {
   },
   servers: [
     {
-      url: "http://localhost:3000",
-      description: "Local development server",
+      url: apiBaseUrl,
+      description: "Application server",
     },
   ],
   tags: [

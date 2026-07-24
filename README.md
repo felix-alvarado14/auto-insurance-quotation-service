@@ -129,11 +129,28 @@ npm run dev
 
 ### Docker
 
-Si deseas levantar la base de datos con Docker Compose:
+Para levantar la aplicación completa con su base de datos en un entorno local reproducible:
 
 ```bash
-docker compose up -d
+docker compose up --build
 ```
+
+La pila incluye:
+
+- un contenedor para la aplicación Next.js en modo producción,
+- un contenedor MySQL 8 para la persistencia,
+- una red interna entre los servicios,
+- un volumen persistente para la base de datos.
+
+Si solo deseas levantar los contenedores en segundo plano:
+
+```bash
+docker compose up --build -d
+```
+
+Las variables necesarias se leen desde `.env.example` y pueden sobrescribirse con un `.env` local sin comprometer secretos reales. El servicio de la aplicación usa `APP_DATABASE_URL` para resolver el contenedor `mysql` dentro de Docker, mientras que la variable `DATABASE_URL` sigue siendo la referencia local del desarrollo directo.
+
+> El arranque del contenedor ejecuta únicamente migraciones de Prisma y no realiza un seed automático al iniciar, para evitar mutaciones de datos no controladas durante el despliegue.
 
 ## Documentación API
 
