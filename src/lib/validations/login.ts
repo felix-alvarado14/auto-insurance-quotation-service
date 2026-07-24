@@ -1,9 +1,5 @@
 import { z } from "zod";
 
-/**
- * Client-side validation schema for login form
- * Mirrors the backend schema for consistency
- */
 export const loginFormSchema = z.object({
   identification: z
     .string()

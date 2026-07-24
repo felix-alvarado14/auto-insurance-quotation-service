@@ -13,10 +13,8 @@ export default function LoginPage() {
     <>
       <RedirectIfAuthenticated />
       <div className="min-h-screen bg-background">
-      {/* Mobile Layout */}
       <div className="lg:hidden flex flex-col items-center justify-center min-h-screen px-6 py-12">
         <div className="w-full max-w-md space-y-8">
-          {/* Logo / Header */}
           <div className="flex flex-col items-center gap-3">
             <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary">
               <Shield className="w-6 h-6 text-white" />
@@ -31,7 +29,6 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Form */}
           <div className="space-y-6">
             <div className="space-y-2">
               <h2 className="text-lg font-semibold text-foreground">Bienvenido</h2>
@@ -44,12 +41,9 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Desktop Layout - Split View */}
       <div className="hidden lg:grid lg:grid-cols-2 min-h-screen">
-        {/* Left - Form */}
         <div className="flex flex-col items-center justify-center px-8">
           <div className="w-full max-w-md space-y-8">
-            {/* Logo / Header */}
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary">
@@ -66,7 +60,6 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Form Content */}
             <div className="space-y-6">
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold text-foreground">Iniciar sesión</h2>
@@ -77,7 +70,6 @@ export default function LoginPage() {
               <LoginForm />
             </div>
 
-            {/* Footer Info */}
             <div className="pt-6 border-t border-border">
               <p className="text-xs text-muted-foreground text-center">
                 ¿Problemas para acceder? Contacta al equipo de soporte
@@ -86,17 +78,14 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Right - Visual Panel */}
         <div className="hidden lg:flex flex-col items-center justify-center bg-gradient-to-br from-primary to-primary-hover px-8 py-12">
           <div className="text-center space-y-8 max-w-md">
-            {/* Icon */}
             <div className="flex justify-center">
               <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center">
                 <Shield className="w-8 h-8 text-white" />
               </div>
             </div>
 
-            {/* Content */}
             <div className="space-y-4">
               <h3 className="text-2xl font-semibold text-white">
                 Bienvenido al sistema
@@ -106,7 +95,6 @@ export default function LoginPage() {
               </p>
             </div>
 
-            {/* Features */}
             <div className="space-y-3 pt-4">
               <div className="flex items-start gap-3 text-white/90 text-sm">
                 <div className="flex-shrink-0 w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-xs font-semibold">
@@ -124,7 +112,7 @@ export default function LoginPage() {
                 <div className="flex-shrink-0 w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-xs font-semibold">
                   ✓
                 </div>
-                <span>Dashboard ejecutivo con métricas en tiempo real</span>
+                <span>Acceso rápido a productos y cotizaciones</span>
               </div>
             </div>
           </div>

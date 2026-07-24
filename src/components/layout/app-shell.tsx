@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
-import { LayoutDashboard, ShieldCheck, FileText, Menu, X } from "lucide-react";
+import { House, ShieldCheck, FileText, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
 import { LogoutButton } from "@/components/auth/logout-button";
 
 const navigation = [
@@ -13,9 +12,9 @@ const navigation = [
     group: "Principal",
     items: [
       {
-        label: "Dashboard",
+        label: "Inicio",
         href: "/",
-        icon: LayoutDashboard,
+        icon: House,
       },
     ],
   },
@@ -111,18 +110,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <Dialog.Root>
       <div className="min-h-screen bg-white text-slate-900">
         <div className="lg:flex lg:min-h-screen">
-          {/* Sidebar - Desktop only */}
           <aside className="hidden lg:flex lg:w-64 lg:flex-shrink-0 lg:flex-col lg:border-r lg:border-slate-200 lg:bg-white lg:px-6 lg:py-6">
             <SidebarContent />
           </aside>
 
-          {/* Main Content */}
           <div className="flex flex-1 flex-col">
-            {/* Header */}
             <header className="border-b border-slate-200 bg-white px-4 py-4 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
-                  {/* Mobile Menu Button */}
                   <Dialog.Trigger asChild>
                     <button
                       type="button"
@@ -135,7 +130,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
                   <div>
                     <p className="text-xs uppercase tracking-wider text-slate-500">
-                      Centro de operaciones
+                      Inicio del sistema
                     </p>
                     <p className="text-lg font-semibold text-slate-900">
                       Seguros de Automóviles
@@ -153,12 +148,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </div>
             </header>
 
-            {/* Main Content Area */}
             <main className="flex-1 bg-white">{children}</main>
           </div>
         </div>
 
-        {/* Mobile Menu Dialog */}
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 z-40 bg-slate-900/20 backdrop-blur-sm lg:hidden" />
           <Dialog.Content className="fixed inset-y-0 left-0 z-50 flex w-full max-w-xs flex-col border-r border-slate-200 bg-white p-6 shadow-lg lg:hidden">

@@ -1,8 +1,3 @@
-/**
- * Client-side authentication utilities
- * Manages JWT storage and retrieval
- */
-
 const JWT_STORAGE_KEY = "auth_token";
 
 export type AuthUser = {
@@ -18,45 +13,64 @@ export type AuthResponse = {
   user: AuthUser;
 };
 
-/**
- * Store JWT in localStorage
- */
 export function saveToken(token: string): void {
   if (typeof window !== "undefined") {
     localStorage.setItem(JWT_STORAGE_KEY, token);
   }
 }
 
-/**
- * Retrieve JWT from localStorage
- */
 export function getToken(): string | null {
   if (typeof window !== "undefined") {
     return localStorage.getItem(JWT_STORAGE_KEY);
   }
+
   return null;
 }
 
-/**
- * Remove JWT from localStorage
- */
 export function clearToken(): void {
   if (typeof window !== "undefined") {
     localStorage.removeItem(JWT_STORAGE_KEY);
   }
 }
 
-/**
- * Check if user is authenticated (has valid JWT)
- */
 export function isAuthenticated(): boolean {
-  const token = getToken();
-  return !!token;
+  return !!getToken();
 }
 
-/**
- * Authenticate user with the backend
- */
+export async function authFetch(input: RequestInfo | URL, init: RequestInit = {}) {
+  const token = getToken();
+
+  if (!token) {
+    clearToken();
+
+    if (typeof window !== "undefined") {
+      window.location.assign("/login");
+    }
+
+    throw new Error("Unauthorized");
+  }
+
+  const response = await fetch(input, {
+    ...init,
+    headers: {
+      ...(init.headers ?? {}),
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (response.status === 401) {
+    clearToken();
+
+    if (typeof window !== "undefined") {
+      window.location.assign("/login");
+    }
+
+    throw new Error("Unauthorized");
+  }
+
+  return response;
+}
+
 export async function authenticate(
   identification: string,
   password: string,
@@ -70,18 +84,17 @@ export async function authenticate(
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Authentication failed");
+    const error = await response.json().catch(() => null);
+    throw new Error(error?.message || "Authentication failed");
   }
 
-  const data = await response.json();
+  const data: AuthResponse = await response.json();
 
-  if (!data.data || !data.data.success) {
+  if (!data.success || !data.token || !data.user) {
     throw new Error(data.message || "Authentication failed");
   }
 
-  // Save token to localStorage
-  saveToken(data.data.token);
+  saveToken(data.token);
 
-  return data.data;
+  return data;
 }

@@ -10,7 +10,7 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Cotizaciones de Seguros | Dashboard",
+  title: "Cotizaciones de Seguros | Inicio",
   description:
     "Interfaz administrativa para el sistema de cotización de seguros de automóviles.",
 };

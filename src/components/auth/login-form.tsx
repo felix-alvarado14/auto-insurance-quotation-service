@@ -27,8 +27,7 @@ export function LoginForm() {
 
     try {
       await authenticate(data.identification, data.password);
-      // Redirect to dashboard after successful login
-      router.push("/");
+      router.replace("/");
     } catch (error) {
       const message = error instanceof Error ? error.message : "Error de autenticación";
       setAuthError(message);

@@ -1,9 +1,9 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-interface TableProps extends React.HTMLAttributes<HTMLTableElement> {}
-interface TableSectionProps extends React.HTMLAttributes<HTMLTableSectionElement> {}
-interface TableCellProps extends React.TdHTMLAttributes<HTMLTableCellElement> {}
+type TableProps = React.HTMLAttributes<HTMLTableElement>;
+type TableSectionProps = React.HTMLAttributes<HTMLTableSectionElement>;
+type TableCellProps = React.TdHTMLAttributes<HTMLTableCellElement>;
 
 export function Table({ className, ...props }: TableProps) {
   return (

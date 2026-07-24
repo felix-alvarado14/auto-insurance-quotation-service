@@ -8,10 +8,8 @@ export function LogoutButton() {
   const router = useRouter();
 
   const handleLogout = () => {
-    // Clear JWT from localStorage
     clearToken();
-    // Redirect to login page
-    router.push("/login");
+    router.replace("/login");
   };
 
   return (
