@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum CoverageType {
+  BASIC
+  STANDARD
+  PREMIUM
+}
+
+model User {
+  id             Int         @id @default(autoincrement())
+  identification String      @unique
+  name           String
+  passwordHash   String
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  quotations     Quotation[]
+}
+
+model Product {
+  id              Int           @id @default(autoincrement())
+  code            String        @unique
+  name            String
+  coverageType    CoverageType
+  description     String
+  minVehicleValue Decimal
+  maxVehicleValue Decimal
+  basePrice       Decimal
+  conditions      String
+  isActive        Boolean       @default(true)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  quotations      Quotation[]
+}
+
+model Quotation {
+  id           Int          @id @default(autoincrement())
+  reference    String       @unique
+  vehicleYear  Int
+  vehicleBrand String
+  vehicleModel String
+  vehicleValue Decimal
+  quotedPrice  Decimal
+  productName  String
+  coverageType CoverageType
+  userId       Int
+  productId    Int
+  createdAt    DateTime     @default(now())
+  user         User         @relation(fields: [userId], references: [id])
+  product      Product      @relation(fields: [productId], references: [id])
+
+  @@index([userId])
+  @@index([productId])
+  @@index([createdAt])
+}

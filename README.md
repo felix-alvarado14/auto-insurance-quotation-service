@@ -23,3 +23,19 @@ Microservicio REST orientado a gestionar el flujo inicial de cotizacion de segur
 5. Desarrollo de modulos y servicios de negocio
 6. Construccion de endpoints REST y validaciones
 7. Pruebas, documentacion y despliegue
+
+## Base de datos local
+
+Para levantar la base de datos local con Docker Compose:
+
+```bash
+docker compose up -d
+```
+
+## Prisma
+
+Prisma ya se encuentra inicializado y configurado para MySQL mediante `DATABASE_URL`. Para generar el cliente despues de actualizar la configuracion o agregar modelos:
+
+```bash
+npx prisma generate
+```
