@@ -34,34 +34,47 @@ export async function getProducts(input: ProductsQueryInput): Promise<GetProduct
     isActive: true,
   };
 
-  const total = await prisma.product.count({ where });
-  const totalPages = Math.max(1, Math.ceil(total / limit));
   const skip = (page - 1) * limit;
 
-  const products = await prisma.product.findMany({
-    where,
-    skip,
-    take: limit,
-    orderBy: {
-      id: "asc",
-    },
-    select: {
-      id: true,
-      code: true,
-      name: true,
-      coverageType: true,
-      description: true,
-      minVehicleValue: true,
-      maxVehicleValue: true,
-      basePrice: true,
-      conditions: true,
-    },
-  });
+  const [total, products] = await Promise.all([
+    prisma.product.count({ where }),
+    prisma.product.findMany({
+      where,
+      skip,
+      take: limit,
+      orderBy: {
+        id: "asc",
+      },
+      select: {
+        id: true,
+        code: true,
+        name: true,
+        coverageType: true,
+        description: true,
+        minVehicleValue: true,
+        maxVehicleValue: true,
+        basePrice: true,
+        conditions: true,
+      },
+    }),
+  ]);
+
+  const totalPages = total === 0 ? 0 : Math.ceil(total / limit);
 
   return {
     success: true,
     message: "Products retrieved successfully.",
-    data: products,
+    data: products.map((product) => ({
+      id: product.id,
+      code: product.code,
+      name: product.name,
+      coverageType: product.coverageType,
+      description: product.description,
+      minVehicleValue: product.minVehicleValue.toString(),
+      maxVehicleValue: product.maxVehicleValue.toString(),
+      basePrice: product.basePrice.toString(),
+      conditions: product.conditions,
+    })),
     pagination: {
       page,
       limit,

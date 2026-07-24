@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 
 import { productsQuerySchema } from "@/lib/validations/products";
 import { getProducts } from "@/services/product.service";
+import { errorResponse, successResponse } from "@/lib/api-response";
 
 export async function GET(request: Request) {
   try {
@@ -12,25 +12,16 @@ export async function GET(request: Request) {
 
     const result = await getProducts(input);
 
-    return NextResponse.json(result, { status: 200 });
+    return successResponse(result, result.message, 200);
   } catch (error) {
     if (error instanceof ZodError) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid query parameters.",
-          errors: error.flatten().fieldErrors,
-        },
-        { status: 400 },
+      return errorResponse(
+        "Invalid query parameters.",
+        400,
+        error.flatten().fieldErrors,
       );
     }
 
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Internal server error.",
-      },
-      { status: 500 },
-    );
+    return errorResponse("Internal server error.", 500);
   }
 }
